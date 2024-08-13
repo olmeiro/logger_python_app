@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M"
+        },
+        "detailed": {
+            "format": "[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s",
+            "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+        },
+        "json": {
+            "()": "mylogger.MyJSONFormatter",
+            "fmt_keys": {
+              "level": "levelname",
+              "message": "message",
+              "timestamp": "timestamp",
+              "logger": "name",
+              "module": "module",
+              "function": "funcName",
+              "line": "lineno",
+              "thread_name": "threadName"
+            }
+        }
+    },
+    "handlers": {
+        "cosmosdb": {
+            "class": "cosmosdb_handler.CosmosDBHandler",
+            "formatter": "detailed"
+        }
+    },
+    "loggers": {
+            "logger_app": {
+                "level": "DEBUG",
+                "handlers": [
+                    "cosmosdb"
+                ],
+                "propagate": false
+            },
+            "logger_app.utils": {
+                "level": "DEBUG",
+                "handlers": [
+                    "cosmosdb"
+                ],
+                "propagate": false
+            }
+        }
+    }
